@@ -34,9 +34,6 @@ nnoremap <Up>   gk
 
 :set laststatus=2
 
-call pathogen#runtime_append_all_bundles()
-  "
-
 :let skk_large_jisyo='~/SKK-JISYO.L'
 :let skk_auto_save_jisyo = 1
 :let skk_kutouten_type = 'en'
