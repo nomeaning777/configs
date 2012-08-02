@@ -21,7 +21,8 @@ SAVEHIST=100000
 
 setopt hist_ignore_dups
 setopt share_history
-
+setopt auto_cd
+setopt cdable_vars
 
 setopt correct
 
@@ -47,6 +48,7 @@ export LD_LIBRARY_PATH="$HOME/local/lib"
 
 export TEXINPUTS=.:~/texmf:
 
+bindkey -e
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
