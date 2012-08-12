@@ -1,0 +1,2 @@
+set editor="vim %s"
+set charset="utf-8"

@@ -42,6 +42,8 @@ alias la="ls -a"
 
 alias vi="vim"
 
+alias emacs="emacs -nw"
+
 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
 
 export LD_LIBRARY_PATH="$HOME/local/lib"
