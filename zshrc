@@ -8,10 +8,22 @@ compinit
 autoload colors
 colors
 
-PROMPT="%{${fg[yellow]}%}[%n@%m] %(!.#.$) %{${reset_color}%}"
+# 右側にはコマンドのステータスとパスを表示する
+function echo_rprompt(){
+  if [ $? = 0 ]
+  then
+    print "%{${fg[cyan]}%}[%39<...<%B%~%b%{${fg[cyan]}%}]%{${reset_color}%}" 
+  else
+    print "%{${fg[red]}%} status:%? %{${fg[cyan]}%}[%39<...<%B%~%b%{${fg[cyan]}%}]%{${reset_color}%}" 
+  fi
+}
+
+
+PROMPT="%{${fg[yellow]}%}[%n@%m]$ %{${reset_color}%}"
 PROMPT2="%{${fg[yellow]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-RPROMPT="%{${fg[cyan]}%}[%~]%{${reset_color}%}"
+setopt prompt_subst
+RPROMPT='`echo_rprompt`'
 
 setopt autopushd
 
@@ -59,6 +71,13 @@ bindkey "^N" history-beginning-search-forward-end
 
 export EDITOR=vim
 
-# 固有の設定
-source ~/etc/conf.sh
+if [ "$HOST" = "nest.mma.club.uec.ac.jp" ]; then
+  export HTTP_PROXY=http://proxy-east.uec.ac.jp:8080/
+  export http_proxy=$HTTP_PROXY
+  export ftp_proxy=$HTTP_PROXY
+  export FTP_PROXY=$HTTP_PROXY
+fi
 
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+ 
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
