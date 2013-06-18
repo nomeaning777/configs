@@ -1,0 +1,7 @@
+Host *
+  ProtocolKeepAlives 60
+  ControlMaster auto
+  ControlPath   /tmp/%r@%h:%p
+  IdentityFile ~/.ssh/id_rsa_np
+  IdentityFile ~/.ssh/id_rsa
+  HashKnownHosts no
