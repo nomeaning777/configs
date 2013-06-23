@@ -4,6 +4,14 @@ compinit
 autoload colors
 colors
 
+autoload -Uz vcs_info
+zstyle ':vcsinfo:*' formats '%s:%b|'
+zstyle ':vcsinfo:*' actionformats '%s:%b%a|'
+function vcs_prompt_info(){
+  LANG=C vcs_info
+  [[ -n "$vcs_info_msg_0_" ]] && echo "$vcs_info_msg_0_"
+}
+
 # 右側にはコマンドのステータスとパスを表示する
 function echo_rprompt(){
   if [ $? = 0 ]
@@ -14,6 +22,7 @@ function echo_rprompt(){
   fi
 }
 
+VCS=""
 
 PROMPT="
 "$'%{${fg[yellow]}%}[%n@%m]: \e[${color[bold]}m${fg[cyan]}%~ ${reset_color}\e[32m(\`date +\"%y/%m/%d %H:%M:%S\"\`)'"
@@ -21,7 +30,7 @@ PROMPT="
 PROMPT2="%{${fg[yellow]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 setopt prompt_subst
-RPROMPT='`echo_rprompt`'
+RPROMPT='`echo_rprompt`%B%{$fg[red]%}`vcs_prompt_info`%f%{${reset_color}%}'
 
 setopt autopushd
 
