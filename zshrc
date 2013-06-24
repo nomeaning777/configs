@@ -4,6 +4,7 @@ compinit
 autoload colors
 colors
 
+setopt prompt_subst
 autoload -Uz vcs_info
 zstyle ':vcsinfo:*' formats '%s:%b|'
 zstyle ':vcsinfo:*' actionformats '%s:%b%a|'
@@ -22,15 +23,18 @@ function echo_rprompt(){
   fi
 }
 
-VCS=""
+function redrev() {
+  perl -pe 's/^/\e[41m/ && s/$/\e[m/';
+}
+
+alias -g E='2> >(redrev)'
 
 PROMPT="
 "$'%{${fg[yellow]}%}[%n@%m]: \e[${color[bold]}m${fg[cyan]}%~ ${reset_color}\e[32m(\`date +\"%y/%m/%d %H:%M:%S\"\`)'"
 %{${fg[yellow]}%}$ %{${reset_color}%}"
 PROMPT2="%{${fg[yellow]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-setopt prompt_subst
-RPROMPT='`echo_rprompt`%B%{$fg[red]%}`vcs_prompt_info`%f%{${reset_color}%}'
+RPROMPT='`echo_rprompt`'$'%{\e[${color[bold]}m$fg[red]%}''`vcs_prompt_info`'"%{${reset_color}%}"
 
 setopt autopushd
 
